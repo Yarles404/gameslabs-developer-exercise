@@ -2,12 +2,14 @@ package net.gameslabs.implem;
 
 import net.gameslabs.api.Player;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerImplem implements Player {
 
     private String id;
     private String name;
+    private ArrayList<String> inventory;
 
     private PlayerImplem(String id, String name) {
         this.id = id;
@@ -22,6 +24,11 @@ public class PlayerImplem implements Player {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public ArrayList<String> getInventory() {
+        return inventory;
     }
 
     @Override
