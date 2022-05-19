@@ -40,15 +40,23 @@ public class Assignment {
 
         // inventory checks
         mainPlayer.getInventory().add("3rd Age Bow");
+        // has
         if (!hasItem("3rd Age Bow")) throw new AssignmentFailed("Player should have 3rd Age Bow in inventory");
         if (hasItem("3rd Age Longsword")) throw new AssignmentFailed("Player should not have 3rd Age Longsword in inventory");
 
+        // give
         if (!giveItem("3rd Age Longsword")) throw new AssignmentFailed("Giving 3rd Age Longsword failed");
         if (!giveItem("3rd Age Pickaxe")) throw new AssignmentFailed("Giving 3rd Age Pickaxe failed");
         if (!giveItem("3rd Age Axe")) throw new AssignmentFailed("Giving 3rd Age Axe failed");
-
         if (!hasItem("3rd Age Longsword")) throw new AssignmentFailed("Player should have 3rd Age Longsword in inventory");
         if (!hasItem("3rd Age Pickaxe")) throw new AssignmentFailed("Player should have 3rd Age Pickaxe in inventory");
+        if (!hasItem("3rd Age Axe")) throw new AssignmentFailed("Player should have 3rd Age Axe in inventory");
+        
+        // remove
+        if (!removeItem("3rd Age Longsword")) throw new AssignmentFailed("Removing 3rd Age Longsword failed");
+        if (!removeItem("3rd Age Pickaxe")) throw new AssignmentFailed("Removing 3rd Age Pickaxe failed");
+        if (hasItem("3rd Age Longsword")) throw new AssignmentFailed("Player should not have 3rd Age Longsword in inventory");
+        if (hasItem("3rd Age Pickaxe")) throw new AssignmentFailed("Player should not have 3rd Age Pickaxe in inventory");
         if (!hasItem("3rd Age Axe")) throw new AssignmentFailed("Player should have 3rd Age Axe in inventory");
     }
 

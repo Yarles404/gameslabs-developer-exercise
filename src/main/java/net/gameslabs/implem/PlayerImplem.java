@@ -14,6 +14,7 @@ public class PlayerImplem implements Player {
     private PlayerImplem(String id, String name) {
         this.id = id;
         this.name = name;
+        this.inventory = new ArrayList<>();
     }
 
     @Override
