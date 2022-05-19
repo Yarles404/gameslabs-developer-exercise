@@ -9,6 +9,7 @@ import net.gameslabs.events.GiveXpEvent;
 import net.gameslabs.implem.PlayerImplem;
 
 import java.util.Arrays;
+import assignment.events.*;
 
 public class Assignment {
 
@@ -33,8 +34,22 @@ public class Assignment {
     }
 
     private void runChecks() {
+        // built-in checks
         if (getLevel(Skill.EXPLORATION) != 1) throw new AssignmentFailed("Exploration XP should be set to level 1");
         if (getLevel(Skill.CONSTRUCTION) != 2) throw new AssignmentFailed("Construction XP should be set to level 2");
+
+        // inventory checks
+        mainPlayer.getInventory().add("3rd Age Bow");
+        if (!hasItem("3rd Age Bow")) throw new AssignmentFailed("Player should have 3rd Age Bow in inventory");
+        if (hasItem("3rd Age Longsword")) throw new AssignmentFailed("Player should not have 3rd Age Longsword in inventory");
+
+        if (!giveItem("3rd Age Longsword")) throw new AssignmentFailed("Giving 3rd Age Longsword failed");
+        if (!giveItem("3rd Age Pickaxe")) throw new AssignmentFailed("Giving 3rd Age Pickaxe failed");
+        if (!giveItem("3rd Age Axe")) throw new AssignmentFailed("Giving 3rd Age Axe failed");
+
+        if (!hasItem("3rd Age Longsword")) throw new AssignmentFailed("Player should have 3rd Age Longsword in inventory");
+        if (!hasItem("3rd Age Pickaxe")) throw new AssignmentFailed("Player should have 3rd Age Pickaxe in inventory");
+        if (!hasItem("3rd Age Axe")) throw new AssignmentFailed("Player should have 3rd Age Axe in inventory");
     }
 
     private int getLevel(Skill skill) {
@@ -42,6 +57,25 @@ public class Assignment {
         registry.sendEvent(getPlayerLevel);
         return getPlayerLevel.getLevel();
     }
+
+    private boolean hasItem(String item) {
+        CheckItemEvent checkItemEvent = new CheckItemEvent(mainPlayer, item);
+        registry.sendEvent(checkItemEvent);
+        return checkItemEvent.hasItem();
+    }
+
+    private boolean giveItem(String item) {
+        GiveItemEvent giveItemEvent = new GiveItemEvent(mainPlayer, item);
+        registry.sendEvent(giveItemEvent);
+        return giveItemEvent.giveSuccessful();
+    }
+
+    private boolean removeItem(String item) {
+        RemoveItemEvent removeItemEvent = new RemoveItemEvent(mainPlayer, item);
+        registry.sendEvent(removeItemEvent);
+        return removeItemEvent.removeSuccessful();
+    }
+
 
     public void log(Object ... arguments) {
         System.out.println(Arrays.asList(arguments).toString());
